@@ -1,16 +1,38 @@
 import NoProject from "./Components/NoProjects";
 import SideBar from "./Components/SideBar";
 import NewProject from "./Components/NewProject";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SelectedProject from "./Components/SelectedProject";
 
 function App() {
 
-  const [projectsState, setProjectsState] = useState({
-    selectedProjectId: undefined,
-    projects: [],
-    tasks: [],
+  const [projectsState, setProjectsState] = useState(() => {
+    const savedState = localStorage.getItem("projectsState");
+
+    return savedState
+      ? JSON.parse(savedState)
+      : {
+        selectedProjectId: undefined,
+        projects: [],
+        tasks: [],
+      };
   });
+
+  useEffect(() => {
+    localStorage.setItem(
+      "projectsState",
+      JSON.stringify(projectsState)
+    );
+  }, [projectsState]);
+
+  // const [projectsState, setProjectsState] = useState({
+  //   selectedProjectId: undefined,
+  //   projects: [],
+  //   tasks: [],
+  // });
+
+
+
 
   function handleDeleteTask(id) {
     setProjectsState(
