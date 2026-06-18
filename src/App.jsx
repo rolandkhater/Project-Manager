@@ -25,14 +25,6 @@ function App() {
     );
   }, [projectsState]);
 
-  // const [projectsState, setProjectsState] = useState({
-  //   selectedProjectId: undefined,
-  //   projects: [],
-  //   tasks: [],
-  // });
-
-
-
 
   function handleDeleteTask(id) {
     setProjectsState(
