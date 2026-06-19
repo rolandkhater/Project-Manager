@@ -37,19 +37,32 @@ function App() {
     )
   }
 
-  function handleAddTask(text) {
+  function handleAddTask(text, importance) {
     setProjectsState((prev) => {
       const taskId = Math.random();
       const newTask = {
         text: text,
         projectId: prev.selectedProjectId,
         id: taskId,
+        importance: importance,
+        isCompleted: false,
       };
       return {
         ...prev,
         tasks: [...prev.tasks, newTask],
       }
     })
+  }
+
+  function handleToggleTaskDone(taskId) {
+    setProjectsState((prev) => {
+      return {
+        ...prev,
+        tasks: prev.tasks.map((task) =>
+          task.id === taskId ? { ...task, isCompleted: !task.isCompleted } : task
+        ),
+      };
+    });
   }
 
   function handleStartAddProject() {
@@ -119,7 +132,9 @@ function App() {
     onDeleteTask={handleDeleteTask}
     project={selectedProject}
     onAddTask={handleAddTask}
-    onDelete={handleDeleteProject} />;
+    onDelete={handleDeleteProject}
+    onToggleTask={handleToggleTaskDone} />;
+
 
   if (projectsState.selectedProjectId === null) {
     content = <NewProject onAdd={handleAddProject} onCancel={handleCancel} />
