@@ -27,6 +27,11 @@ function App() {
 
 
   function handleDeleteTask(id) {
+    const proceed = window.confirm("Are you sure you want to delete this task?");
+    if (!proceed) {
+      return;
+    }
+
     setProjectsState(
       prev => {
         return {
